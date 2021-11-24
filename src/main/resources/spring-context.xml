@@ -6,6 +6,7 @@
     <bean id = "readerCSV" class="reading.ReaderCSV">
         <constructor-arg name="path" value="quize.csv"/>
     </bean>
+
     <bean id = "quizeService" class="service.QuizeService">
         <constructor-arg name="readerCSV" ref="readerCSV"/>
     </bean>
