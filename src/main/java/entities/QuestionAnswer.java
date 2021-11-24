@@ -1,6 +1,7 @@
 package entities;
 
 public class QuestionAnswer {
+
     private String question;
     private String answer;
 

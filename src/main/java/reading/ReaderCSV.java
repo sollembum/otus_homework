@@ -14,6 +14,7 @@ public class ReaderCSV implements Reader{
     public ReaderCSV(String path) {
         this.path = path;
     }
+
     public List<QuestionAnswer> read(){
         List<QuestionAnswer> quize = new ArrayList<>();
         try{
