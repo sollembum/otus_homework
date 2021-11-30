@@ -1,6 +1,10 @@
-package reading;
+package ru.otus.azat.reading;
 
-import entities.QuestionAnswer;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import ru.otus.azat.entities.QuestionAnswer;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -8,10 +12,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class ReaderCSV implements Reader{
-    private final String path;
+@Repository
+public class ReaderCSV implements Reader {
+    private String path;
 
-    public ReaderCSV(String path) {
+    public ReaderCSV(@Value("${path}") String path) {
         this.path = path;
     }
 

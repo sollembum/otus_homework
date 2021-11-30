@@ -1,4 +1,4 @@
-package entities;
+package ru.otus.azat.entities;
 
 public class QuestionAnswer {
 
