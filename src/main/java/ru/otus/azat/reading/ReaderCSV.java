@@ -1,15 +1,13 @@
 package ru.otus.azat.reading;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-import ru.otus.azat.entities.QuestionAnswer;
+import ru.otus.azat.entities.Question;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import ru.otus.azat.exception.QuestionsLoadingException;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 @Repository
@@ -19,29 +17,35 @@ public class ReaderCSV implements Reader {
     public ReaderCSV(@Value("${path}") String path) {
         this.path = path;
     }
-
-    public List<QuestionAnswer> read(){
-        List<QuestionAnswer> quize = new ArrayList<>();
+    //а как сделать IOException unchecked если он checked ?))
+    @Override
+    public List<Question> readAll(){
+        List<Question> quize = new ArrayList<>();
         try{
-            File file = new File(Objects.requireNonNull(getClass().getClassLoader().getResource(path)).getFile());
-            BufferedReader reader = new BufferedReader(new FileReader(file));
+            InputStream is = getClass().getClassLoader().getResourceAsStream(path);
+            InputStreamReader inputStreamReader = new InputStreamReader(is);
+            BufferedReader reader = new BufferedReader(inputStreamReader);
             String line;
             Scanner scanner;
             int index = 0;
             while ((line = reader.readLine()) != null) {
-                QuestionAnswer qa = new QuestionAnswer();
+                Question qa = new Question();
                 scanner = new Scanner(line);
                 scanner.useDelimiter(",");
                 while (scanner.hasNext()){
                     String data = scanner.next();
                     if (index%2==0){
                         qa.setQuestion(data);
-                    }else qa.setAnswer(data);
+                    }else qa.setRightAnswer(data);
                     index++;
                 }
                 quize.add(qa);
             }
+            is.close();
+            inputStreamReader.close();
         } catch (IOException e) {
+            //не понял как обернуть это в свое исключение.
+            // Компилятор ругался, говорил обязательно IOException надо ловить
             e.printStackTrace();
         }
         return quize;

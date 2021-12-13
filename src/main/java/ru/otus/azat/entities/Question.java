@@ -1,9 +1,9 @@
 package ru.otus.azat.entities;
 
-public class QuestionAnswer {
+public class Question {
 
     private String question;
-    private String answer;
+    private String rightAnswer;
 
     public String getQuestion() {
         return question;
@@ -13,11 +13,11 @@ public class QuestionAnswer {
         this.question = question;
     }
 
-    public String getAnswer() {
-        return answer;
+    public String getRightAnswer() {
+        return rightAnswer;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setRightAnswer(String rightAnswer) {
+        this.rightAnswer = rightAnswer;
     }
 }

@@ -1,5 +1,9 @@
 package ru.otus.azat.reading;
 
-public interface Reader {
+import ru.otus.azat.entities.Question;
 
+import java.util.List;
+
+public interface Reader {
+    List<Question> readAll();
 }
