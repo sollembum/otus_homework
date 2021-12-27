@@ -21,9 +21,8 @@ public class ReaderCSV implements Reader {
     @Override
     public List<Question> readAll(){
         List<Question> quize = new ArrayList<>();
-        try{
-            InputStream is = getClass().getClassLoader().getResourceAsStream(path);
-            InputStreamReader inputStreamReader = new InputStreamReader(is);
+        try(InputStream is = getClass().getClassLoader().getResourceAsStream(path);
+            InputStreamReader inputStreamReader = new InputStreamReader(is)){
             BufferedReader reader = new BufferedReader(inputStreamReader);
             String line;
             Scanner scanner;
@@ -41,12 +40,8 @@ public class ReaderCSV implements Reader {
                 }
                 quize.add(qa);
             }
-            is.close();
-            inputStreamReader.close();
-        } catch (IOException e) {
-            //не понял как обернуть это в свое исключение.
-            // Компилятор ругался, говорил обязательно IOException надо ловить
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new QuestionsLoadingException("Exception during loading questions", e);
         }
         return quize;
     }

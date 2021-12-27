@@ -1,5 +1,6 @@
 package ru.otus.azat.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -9,26 +10,23 @@ import java.util.Scanner;
 @Service
 public class ConsoleInteractor implements Interactor {
 
-    //не понимаю немного зачем System.in и System.out класть в конструктор
-    //поэтому не понимаю, как это должно было выглядеть
 
-    private final InputStream consoleIn;
+    private final Scanner consoleIn;
     private final PrintStream consoleOut;
 
-    public ConsoleInteractor() {
-        this.consoleIn = System.in;
-        this.consoleOut = System.out;
+    public ConsoleInteractor(@Value("#{ T (java.lang.System).in}") InputStream in,
+                             @Value("#{ T(java.lang.System).out}") PrintStream out) {
+        this.consoleIn = new Scanner(in);
+        this.consoleOut = out;
     }
 
     @Override
-    public void askQuestion(String question) {
-        consoleOut.println(question);
-        consoleOut.print("Input the answer: ");
+    public void out(String message) {
+        consoleOut.print(message);
     }
 
     @Override
-    public String readAnswer() {
-        Scanner scanner = new Scanner(consoleIn);
-        return scanner.nextLine();
+    public String readLine() {
+        return consoleIn.nextLine();
     }
 }

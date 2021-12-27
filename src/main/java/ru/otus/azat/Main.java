@@ -4,7 +4,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 
-import ru.otus.azat.service.QuizeServiceImpl;
+import ru.otus.azat.service.QuizeService;
 
 @ComponentScan
 @PropertySource("classpath:application.properties")
@@ -13,7 +13,7 @@ public class Main {
 
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(Main.class);
-        QuizeServiceImpl service = context.getBean(QuizeServiceImpl.class);
+        QuizeService service = context.getBean(QuizeService.class);
         service.startQuize();
     }
 }

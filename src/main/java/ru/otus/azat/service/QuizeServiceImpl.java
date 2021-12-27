@@ -11,10 +11,10 @@ import java.util.Scanner;
 @Service
 public class QuizeServiceImpl implements QuizeService{
     private final int acceptableLvl;
-    private final ConsoleInteractor consoleInteractor;
+    private final Interactor consoleInteractor;
     private final ReaderCSV readerCSV;
 
-    public QuizeServiceImpl(ConsoleInteractor consoleInteractor,ReaderCSV readerCSV, @Value("${acceptable_lvl}") int acceptableLvl) {
+    public QuizeServiceImpl(Interactor consoleInteractor,ReaderCSV readerCSV, @Value("${acceptable_lvl}") int acceptableLvl) {
         this.acceptableLvl = acceptableLvl;
         this.readerCSV = readerCSV;
         this.consoleInteractor = consoleInteractor;
@@ -25,17 +25,19 @@ public class QuizeServiceImpl implements QuizeService{
         List<Question> listOfQuestions = readerCSV.readAll();
         int rightAnswers = 0;
         for (Question qa: listOfQuestions) {
-            consoleInteractor.askQuestion(qa.getQuestion());
-            String answer = consoleInteractor.readAnswer();
+            consoleInteractor.out(qa.getQuestion() + System.lineSeparator() + "Input the answer: ");
+            String answer = consoleInteractor.readLine();
             if (answer.equals(qa.getRightAnswer().trim())){
                 rightAnswers++;
             }
         }
-        //в consoleInteractor нет смысла переносить кусок ниже, так как логично, что Quize говорит о рез-ах теста
+        showResult(rightAnswers);
+    }
+    private void showResult (int rightAnswers){
         if (rightAnswers >= acceptableLvl){
-            System.out.println("You gave "+rightAnswers + " right answers. You passed test");
+            System.out.println("You gave "+rightAnswers + " right answers. You passed the test");
         } else {
-            System.out.println("You gave "+rightAnswers + " right answers. You failed test");
+            System.out.println("You gave "+rightAnswers + " right answers. You failed the test");
         }
     }
 }

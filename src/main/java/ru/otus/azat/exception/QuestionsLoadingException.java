@@ -1,9 +1,7 @@
 package ru.otus.azat.exception;
 
-import java.io.IOException;
-
-public class QuestionsLoadingException extends IOException {
-    public QuestionsLoadingException(String message) {
-        super(message);
+public class QuestionsLoadingException extends RuntimeException {
+    public QuestionsLoadingException(String message, Throwable cause) {
+        super(message, cause);
     }
 }
