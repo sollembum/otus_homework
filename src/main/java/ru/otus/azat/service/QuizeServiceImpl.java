@@ -3,35 +3,37 @@ package ru.otus.azat.service;
 import org.springframework.beans.factory.annotation.Value;
 import ru.otus.azat.entities.Question;
 import org.springframework.stereotype.Service;
-import ru.otus.azat.reading.ReaderCSV;
+import ru.otus.azat.entities.Student;
+import ru.otus.azat.reading.Reader;
 
 import java.util.List;
-import java.util.Scanner;
 
 @Service
 public class QuizeServiceImpl implements QuizeService{
     private final int acceptableLvl;
-    private final Interactor consoleInteractor;
-    private final ReaderCSV readerCSV;
+    private final Interactor interactor;
+    private final Reader readerCSV;
+    private final StudentCreator studentCreator;
 
-    public QuizeServiceImpl(Interactor consoleInteractor,ReaderCSV readerCSV, @Value("${acceptable_lvl}") int acceptableLvl) {
+    public QuizeServiceImpl(Interactor interactor, Reader readerCSV, @Value("${acceptable_lvl}") int acceptableLvl, StudentCreator studentCreator) {
         this.acceptableLvl = acceptableLvl;
         this.readerCSV = readerCSV;
-        this.consoleInteractor = consoleInteractor;
+        this.interactor = interactor;
+        this.studentCreator = studentCreator;
     }
 
     @Override
     public void startQuize(){
+        Student student = studentCreator.createStudent();
         List<Question> listOfQuestions = readerCSV.readAll();
-        int rightAnswers = 0;
         for (Question qa: listOfQuestions) {
-            consoleInteractor.out(qa.getQuestion() + System.lineSeparator() + "Input the answer: ");
-            String answer = consoleInteractor.readLine();
+            interactor.out(qa.getQuestion() + System.lineSeparator() + "Input the answer: ");
+            String answer = interactor.readLine();
             if (answer.equals(qa.getRightAnswer().trim())){
-                rightAnswers++;
+                student.thatWasRightAnswer();
             }
         }
-        showResult(rightAnswers);
+        showResult(student.getRightAnswers());
     }
     private void showResult (int rightAnswers){
         if (rightAnswers >= acceptableLvl){

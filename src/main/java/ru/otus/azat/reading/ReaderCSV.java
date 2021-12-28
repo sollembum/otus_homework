@@ -12,12 +12,11 @@ import java.util.Scanner;
 
 @Repository
 public class ReaderCSV implements Reader {
-    private String path;
+    private final String path;
 
     public ReaderCSV(@Value("${path}") String path) {
         this.path = path;
     }
-    //а как сделать IOException unchecked если он checked ?))
     @Override
     public List<Question> readAll(){
         List<Question> quize = new ArrayList<>();

@@ -8,14 +8,14 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 @Service
-public class ConsoleInteractor implements Interactor {
+public class InteractorImpl implements Interactor {
 
 
     private final Scanner consoleIn;
     private final PrintStream consoleOut;
 
-    public ConsoleInteractor(@Value("#{ T (java.lang.System).in}") InputStream in,
-                             @Value("#{ T(java.lang.System).out}") PrintStream out) {
+    public InteractorImpl(@Value("#{ T (java.lang.System).in}") InputStream in,
+                          @Value("#{ T(java.lang.System).out}") PrintStream out) {
         this.consoleIn = new Scanner(in);
         this.consoleOut = out;
     }
