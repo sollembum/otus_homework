@@ -3,15 +3,7 @@ package ru.otus.azat.entities;
 public class Student {
     private String name;
     private String surname;
-    private int rightAnswers = 0;
 
-    public int getRightAnswers() {
-        return rightAnswers;
-    }
-
-    public void thatWasRightAnswer(){
-        rightAnswers++;
-    }
     public String getName() {
         return name;
     }

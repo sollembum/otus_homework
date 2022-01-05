@@ -1,39 +1,45 @@
 package ru.otus.azat.service;
 
-import org.springframework.beans.factory.annotation.Value;
+import ru.otus.azat.config.QuizeConfig;
 import ru.otus.azat.entities.Question;
 import org.springframework.stereotype.Service;
-import ru.otus.azat.entities.Student;
+import ru.otus.azat.entities.Result;
 import ru.otus.azat.reading.Reader;
 
 import java.util.List;
 
 @Service
 public class QuizeServiceImpl implements QuizeService{
+
     private final int acceptableLvl;
     private final Interactor interactor;
-    private final Reader readerCSV;
+    private final Reader reader;
     private final StudentCreator studentCreator;
 
-    public QuizeServiceImpl(Interactor interactor, Reader readerCSV, @Value("${acceptable_lvl}") int acceptableLvl, StudentCreator studentCreator) {
-        this.acceptableLvl = acceptableLvl;
-        this.readerCSV = readerCSV;
+    public QuizeServiceImpl(Interactor interactor, Reader reader, QuizeConfig config, StudentCreator studentCreator) {
+        this.acceptableLvl = config.getAcceptableLvl();
+        this.reader = reader;
         this.interactor = interactor;
         this.studentCreator = studentCreator;
     }
 
     @Override
     public void startQuize(){
-        Student student = studentCreator.createStudent();
-        List<Question> listOfQuestions = readerCSV.readAll();
+        interactor.out("Enter your localization:");
+        //хорошее ли решение сделать локальную переменную из локализации теста?
+        String localizationCode = interactor.readLine();
+        Result result = new Result();
+        //нормально ли передавать ее во все сервисы?
+        result.setStudent(studentCreator.createStudent(localizationCode));
+        List<Question> listOfQuestions = reader.readAll();
         for (Question qa: listOfQuestions) {
             interactor.out(qa.getQuestion() + System.lineSeparator() + "Input the answer: ");
             String answer = interactor.readLine();
             if (answer.equals(qa.getRightAnswer().trim())){
-                student.thatWasRightAnswer();
+                result.wasRightAnswer();
             }
         }
-        showResult(student.getRightAnswers());
+        showResult(result.getRightAnswers());
     }
     private void showResult (int rightAnswers){
         if (rightAnswers >= acceptableLvl){

@@ -1,8 +1,8 @@
 package ru.otus.azat.reading;
 
 import org.springframework.stereotype.Repository;
+import ru.otus.azat.config.FileConfig;
 import ru.otus.azat.entities.Question;
-import org.springframework.beans.factory.annotation.Value;
 import ru.otus.azat.exception.QuestionsLoadingException;
 
 import java.io.*;
@@ -13,9 +13,8 @@ import java.util.Scanner;
 @Repository
 public class ReaderCSV implements Reader {
     private final String path;
-
-    public ReaderCSV(@Value("${path}") String path) {
-        this.path = path;
+    public ReaderCSV(FileConfig config) {
+        this.path = config.getEngFile();
     }
     @Override
     public List<Question> readAll(){
