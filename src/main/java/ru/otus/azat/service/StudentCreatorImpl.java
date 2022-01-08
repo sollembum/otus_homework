@@ -8,30 +8,20 @@ import java.util.Locale;
 @Service
 public class StudentCreatorImpl implements StudentCreator {
     private final Interactor interactor;
-    private final MessageSource msg;
+    private final LocalizationService localizationService;
 
-    public StudentCreatorImpl(Interactor interactor, MessageSource msg) {
+    public StudentCreatorImpl(Interactor interactor, LocalizationService localizationService) {
         this.interactor = interactor;
-        this.msg = msg;
+        this.localizationService = localizationService;
     }
 
     @Override
     public Student createStudent(String localizationCode) {
         Student student = new Student();
-        if (localizationCode.equals("ru")) {
-            interactor.out(
-                    msg.getMessage("strings.askName",
-                            new String[] {},
-                            Locale.forLanguageTag("ru-RU"))
-            );
-            student.setName(interactor.readLine());
-            interactor.out(
-                    msg.getMessage("strings.askSurname",
-                            new String[] {},
-                            Locale.forLanguageTag("ru-RU"))
-            );
-            student.setSurname(interactor.readLine());
-        }
+        interactor.out(localizationService.getLocalMessage("strings.askName"));
+        student.setName(interactor.readLine());
+        interactor.out(localizationService.getLocalMessage("strings.askSurname"));
+        student.setSurname(interactor.readLine());
         return student;
     }
 }

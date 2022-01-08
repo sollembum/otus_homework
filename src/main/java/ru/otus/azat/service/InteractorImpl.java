@@ -22,7 +22,7 @@ public class InteractorImpl implements Interactor {
 
     @Override
     public void out(String message) {
-        consoleOut.print(message);
+        consoleOut.println(message);
     }
 
     @Override

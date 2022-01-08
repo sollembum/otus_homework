@@ -6,17 +6,23 @@ import org.springframework.stereotype.Service;
 import ru.otus.azat.entities.Result;
 import ru.otus.azat.reading.Reader;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class QuizeServiceImpl implements QuizeService{
 
+    private final LocalizationService localizationService;
+    private final String[] languages;
     private final int acceptableLvl;
     private final Interactor interactor;
     private final Reader reader;
     private final StudentCreator studentCreator;
 
-    public QuizeServiceImpl(Interactor interactor, Reader reader, QuizeConfig config, StudentCreator studentCreator) {
+    public QuizeServiceImpl(LocalizationService localizationService, Interactor interactor,
+                            Reader reader, QuizeConfig config, StudentCreator studentCreator) {
+        this.localizationService = localizationService;
+        this.languages = config.getLanguages();
         this.acceptableLvl = config.getAcceptableLvl();
         this.reader = reader;
         this.interactor = interactor;
@@ -25,15 +31,15 @@ public class QuizeServiceImpl implements QuizeService{
 
     @Override
     public void startQuize(){
-        interactor.out("Enter your localization:");
-        //хорошее ли решение сделать локальную переменную из локализации теста?
+        interactor.out("Choose your localization " + Arrays.toString(languages));
         String localizationCode = interactor.readLine();
+        localizationService.setCurrentLocalization(localizationCode);
         Result result = new Result();
-        //нормально ли передавать ее во все сервисы?
         result.setStudent(studentCreator.createStudent(localizationCode));
         List<Question> listOfQuestions = reader.readAll();
         for (Question qa: listOfQuestions) {
-            interactor.out(qa.getQuestion() + System.lineSeparator() + "Input the answer: ");
+            interactor.out(qa.getQuestion() + System.lineSeparator() +
+                    localizationService.getLocalMessage("strings.askForAnswer"));
             String answer = interactor.readLine();
             if (answer.equals(qa.getRightAnswer().trim())){
                 result.wasRightAnswer();
@@ -43,9 +49,9 @@ public class QuizeServiceImpl implements QuizeService{
     }
     private void showResult (int rightAnswers){
         if (rightAnswers >= acceptableLvl){
-            System.out.println("You gave "+rightAnswers + " right answers. You passed the test");
+            interactor.out(localizationService.getLocalMessage("strings.announceSuccess"));
         } else {
-            System.out.println("You gave "+rightAnswers + " right answers. You failed the test");
+            interactor.out(localizationService.getLocalMessage("strings.announceFail"));
         }
     }
 }

@@ -8,6 +8,16 @@ import org.springframework.stereotype.Component;
 public class QuizeConfig {
     private int acceptableLvl;
 
+    public String[] getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(String[] languages) {
+        this.languages = languages;
+    }
+
+    private String[] languages;
+
     public int getAcceptableLvl() {
         return acceptableLvl;
     }
