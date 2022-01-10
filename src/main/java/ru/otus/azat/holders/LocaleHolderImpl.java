@@ -35,7 +35,7 @@ public class LocaleHolderImpl implements LocaleHolder {
     public void changeLocalization(String localizationCode) {
         setLocaleTag(localizationCode);
         if (localizationCode.equals(languages[0])){
-            setLocale(Locale.forLanguageTag("ru-RU"));
+            setLocale(Locale.forLanguageTag(languages[0]));
         }
         if (localizationCode.equals(languages[1])){
             setLocale(Locale.US);
