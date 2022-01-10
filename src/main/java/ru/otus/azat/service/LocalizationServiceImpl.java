@@ -4,7 +4,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import ru.otus.azat.holders.LocaleHolder;
 
-import java.util.Locale;
 
 @Service
 public class LocalizationServiceImpl implements LocalizationService{

@@ -1,7 +1,6 @@
 package ru.otus.azat.service;
 
 import ru.otus.azat.holders.LocaleHolder;
-import ru.otus.azat.holders.LocaleHolderImpl;
 import ru.otus.azat.config.QuizeConfig;
 import ru.otus.azat.entities.Question;
 import org.springframework.stereotype.Service;
