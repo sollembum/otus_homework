@@ -3,7 +3,7 @@ package ru.otus.azat.reading;
 import org.springframework.stereotype.Repository;
 import ru.otus.azat.entities.Question;
 import ru.otus.azat.exception.QuestionsLoadingException;
-import ru.otus.azat.service.LocalizationService;
+import ru.otus.azat.providers.FileNameProvider;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -12,19 +12,16 @@ import java.util.Scanner;
 
 @Repository
 public class ReaderCSV implements Reader {
-    private String path;
-    private final LocalizationService localizationService;
-    public ReaderCSV(LocalizationService localizationService) {
-        this.localizationService = localizationService;
+    private final FileNameProvider fileNameProvider;
+
+    public ReaderCSV(FileNameProvider fileNameProvider) {
+        this.fileNameProvider = fileNameProvider;
     }
-    private void setPath(){
-        this.path = "quize-" + localizationService.getCurrentLocalization() + ".csv";
-    }
+
     @Override
     public List<Question> readAll(){
-        setPath();
         List<Question> quize = new ArrayList<>();
-        try(InputStream is = getClass().getClassLoader().getResourceAsStream(path);
+        try(InputStream is = getClass().getClassLoader().getResourceAsStream(fileNameProvider.getFileName());
             InputStreamReader inputStreamReader = new InputStreamReader(is)){
             BufferedReader reader = new BufferedReader(inputStreamReader);
             String line;
