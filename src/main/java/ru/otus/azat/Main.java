@@ -13,6 +13,7 @@ public class Main {
         ApplicationContext context =
                 SpringApplication.run(Main.class, args);
         QuizeService service = context.getBean(QuizeService.class);
+
         service.startQuize();
     }
 }
