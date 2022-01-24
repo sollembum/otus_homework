@@ -3,6 +3,7 @@ package ru.otus.azat.holders;
 import org.springframework.stereotype.Component;
 import ru.otus.azat.config.QuizeConfig;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 @Component
@@ -34,11 +35,15 @@ public class LocaleHolderImpl implements LocaleHolder {
     @Override
     public void changeLocalization(String localizationCode) {
         setLocaleTag(localizationCode);
-        if (localizationCode.equals(languages[0])){
-            setLocale(Locale.forLanguageTag(languages[0]));
-        }
-        if (localizationCode.equals(languages[1])){
+        int indexOfLocalizationCode =  Arrays.asList(languages).indexOf(localizationCode);
+        if (indexOfLocalizationCode <0){
             setLocale(Locale.US);
+            return;
+        }
+        if (languages[indexOfLocalizationCode].equals("en-US")){
+            setLocale(Locale.US);
+        } else {
+            setLocale(Locale.forLanguageTag(languages[indexOfLocalizationCode]));
         }
     }
 }
