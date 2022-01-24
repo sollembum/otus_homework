@@ -1,0 +1,5 @@
+quize:
+  acceptable-lvl: 3
+  languages:
+    - ru-RU
+    - en-US
