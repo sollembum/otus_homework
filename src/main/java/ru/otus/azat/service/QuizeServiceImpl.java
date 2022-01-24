@@ -32,7 +32,7 @@ public class QuizeServiceImpl implements QuizeService{
     }
 
     @Override
-    public void startQuize(){
+    public String startQuize(){
         interactor.out("Choose your localization " + Arrays.toString(languages));
         String localizationCode = interactor.readLine();
         localeHolder.changeLocalization(localizationCode);
@@ -48,6 +48,7 @@ public class QuizeServiceImpl implements QuizeService{
             }
         }
         showResult(result.getRightAnswers());
+        return localizationService.getLocalMessage("strings.announceTestEnd");
     }
     private void showResult (int rightAnswers){
         if (rightAnswers >= acceptableLvl){
