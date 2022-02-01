@@ -9,24 +9,29 @@ import ru.otus.azat.holders.LocaleHolder;
 import ru.otus.azat.service.Interactor;
 import ru.otus.azat.service.StudentCreator;
 
+import java.util.spi.LocaleServiceProvider;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class StudentCreatorImplTest {
     @Autowired
-    StudentCreator studentCreator;
+    private StudentCreator studentCreator;
 
     @MockBean
-    LocaleHolder lh;
+    private LocalizationService localizationService;
     @MockBean
-    Interactor interactor;
+    private Interactor interactor;
 
     @Test
     public void createStudentSuccessTest(){
-        when(lh.getLocaleTag()).thenReturn("en-US");
+        when(localizationService.getLocalMessage("messageCode")).thenReturn("mockMessage");
         when(interactor.readLine()).thenReturn("1and2");
         Student student = studentCreator.createStudent();
         assertNotNull(student);
+        assertEquals(student.getName(), "1and2");
+        assertEquals(student.getSurname(), "1and2");
     }
 }

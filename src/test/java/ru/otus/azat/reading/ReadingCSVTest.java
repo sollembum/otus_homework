@@ -18,10 +18,10 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 public class ReadingCSVTest {
     @Autowired
-    Reader reader;
+    private Reader reader;
 
     @MockBean
-    LocaleHolder lh;
+    private LocaleHolder lh;
 
     @Test
     public void readAllSuccess(){
