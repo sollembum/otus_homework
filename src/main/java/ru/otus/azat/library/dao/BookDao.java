@@ -5,9 +5,9 @@ import ru.otus.azat.library.entity.Book;
 import java.util.List;
 
 public interface BookDao {
-    void create();
+    void create(Book book);
     void update();
-    void delete();
+    void deleteById(long id);
     Book getById(long id);
     List<Book> getAll();
 }
