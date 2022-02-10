@@ -25,7 +25,7 @@ hs_err_pid*
 *.bat
 */.idea
 *.iml
-*/target
+target
 
 .idea
 *.iml

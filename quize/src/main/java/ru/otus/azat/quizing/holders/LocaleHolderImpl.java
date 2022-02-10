@@ -37,6 +37,7 @@ public class LocaleHolderImpl implements LocaleHolder {
         setLocaleTag(localizationCode);
         int indexOfLocalizationCode =  Arrays.asList(languages).indexOf(localizationCode);
         if (indexOfLocalizationCode <0){
+            setLocaleTag("en-US");
             setLocale(Locale.US);
             return;
         }
