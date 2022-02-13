@@ -1,4 +1,4 @@
-package quizing.reading;
+package ru.otus.azat.quizing.reading;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,13 +1,13 @@
 package ru.otus.azat.library.dao;
 
-import ru.otus.azat.library.entity.Book;
+import ru.otus.azat.library.entities.Book;
 
 import java.util.List;
 
 public interface BookDao {
     void create(Book book);
-    void update();
-    void deleteById(long id);
-    Book getById(long id);
+    String updateById(Long id, String value);
+    String deleteById(Long id);
+    Book getById(Long id);
     List<Book> getAll();
 }

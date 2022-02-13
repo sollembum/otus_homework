@@ -1,10 +1,13 @@
-package quizing.service;
+package ru.otus.azat.quizing.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.otus.azat.quizing.entities.Student;
+import ru.otus.azat.quizing.service.Interactor;
+import ru.otus.azat.quizing.service.LocalizationService;
+import ru.otus.azat.quizing.service.StudentCreator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
