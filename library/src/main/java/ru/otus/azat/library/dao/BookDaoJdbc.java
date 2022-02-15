@@ -72,37 +72,35 @@ public class BookDaoJdbc implements BookDao{
     @Override
     public Book getById(Long id) {
         Map<String, Object> params = Collections.singletonMap("id", id);
-        return namedParameterJdbcOperations.queryForObject("select books.id, books.title, authors.fullname as author, genres.name as genre " +
+        return namedParameterJdbcOperations.queryForObject("select books.id, books.title, " +
+                        "authors.fullname as authors_fullname, authors.id as authors_id, " +
+                        "genres.name as genres_name, genres.id as genres_id " +
                         "from books " +
                         "join authors on books.author_id = authors.id " +
                         "join genres on books.genre_id = genres.id " +
-                        "where books.id = :id", params, new BookMapper(genreDao, authorDao)
-        );    }
+                        "where books.id = :id", params, new BookMapper()
+        );
+    }
 
     @Override
     public List<Book> getAll() {
-        return namedParameterJdbcOperations.query("select books.id, books.title, authors.fullname as author, genres.name as genre " +
+        return namedParameterJdbcOperations.query("select books.id, books.title, " +
+                        "authors.fullname as authors_fullname, authors.id as authors_id, " +
+                        "genres.name as genres_name, genres.id as genres_id " +
                 "from books " +
                 "join authors on books.author_id = authors.id " +
                 "join genres on books.genre_id = genres.id"
-                , new BookMapper(genreDao, authorDao));
+                , new BookMapper());
     }
 
     private static class BookMapper implements RowMapper<Book>{
-        GenreDao genreDao;
-        AuthorDao authorDao;
-
-        private BookMapper(GenreDao genreDao, AuthorDao authorDao) {
-            this.authorDao = authorDao;
-            this.genreDao = genreDao;
-        }
 
         @Override
         public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
             Long id = rs.getLong("id");
             String title = rs.getString("title");
-            Author author = authorDao.getByName(rs.getString("author"));
-            Genre genre = genreDao.getByName(rs.getString("genre"));
+            Author author = new Author(rs.getLong("authors_id"), rs.getString("authors_fullname"));
+            Genre genre = new Genre (rs.getLong("genres_id"), rs.getString("genres_name"));
             return new Book(id, title, author, genre);
         }
     }
