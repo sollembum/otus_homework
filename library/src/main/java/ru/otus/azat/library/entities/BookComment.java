@@ -1,6 +1,5 @@
 package ru.otus.azat.library.entities;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,17 +15,17 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "AUTHORS")
-public class Author {
+@Table(name = "BOOK_COMMENTS")
+public class BookComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "fullName", nullable = false, unique = true)
-    private String fullName;
+    @Column(name = "comment")
+    private String comment;
 
     @Override
     public String toString() {
-        return "Имя автора: " + fullName;
+        return "Комментарий: " + comment;
     }
 }
