@@ -2,61 +2,60 @@ package ru.otus.azat.library.shell;
 
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import ru.otus.azat.library.dao.AuthorDao;
-import ru.otus.azat.library.dao.BookDao;
-import ru.otus.azat.library.dao.GenreDao;
 import ru.otus.azat.library.entities.Book;
+import ru.otus.azat.library.services.AuthorService;
 import ru.otus.azat.library.services.BookService;
+import ru.otus.azat.library.services.GenreService;
 
 @ShellComponent
 public class Commands {
     private final BookService bookService;
-    private final BookDao bookDao;
-    private final GenreDao genreDao;
-    private final AuthorDao authorDao;
-    public Commands(BookService bookService, BookDao bookDao, GenreDao genreDao, AuthorDao authorDao) {
+    private final GenreService genreService;
+    private final AuthorService authorService;
+
+    public Commands(BookService bookService, GenreService genreService, AuthorService authorService) {
         this.bookService = bookService;
-        this.bookDao = bookDao;
-        this.genreDao = genreDao;
-        this.authorDao = authorDao;
+        this.genreService = genreService;
+        this.authorService = authorService;
     }
+
     @ShellMethod(value = "Create new book", key = {"create"})
     public String createBook(String title, String authorFullName, String genreName){
         Book book = bookService.createNewBook(title, authorFullName, genreName);
-        return bookDao.create(book);
+        return book + "was created!";
     }
     @ShellMethod(value = "Books count", key = {"cnt", "count"})
     public String countBooks(){
-        return String.valueOf(bookDao.count());
+        return String.valueOf(bookService.countBooks());
     }
 
     @ShellMethod(value = "Update book by id", key = {"upd", "updTitle"})
     public String updTitle(Long id, String value){
-        return bookDao.updateById(id,value);
+        return bookService.updateBook(id, value);
     }
 
     @ShellMethod(value = "Delete book by id", key = {"delete", "deleteBook"})
     public String deleteBookById(Long id){
-        return bookDao.deleteById(id);
+        return bookService.deleteBook(id);
     }
 
     @ShellMethod(value = "Find book by id", key = {"find", "findBook"})
     public String getBookById(Long id){
-        return bookDao.getById(id).toString();
+        return bookService.findBook(id).toString();
     }
 
     @ShellMethod(value = "Show Books", key = {"books", "b"})
     public String showAllBooks(){
-        return bookDao.getAll().toString();
+        return bookService.findAllBooks().toString();
     }
 
     @ShellMethod(value = "Show Genres", key = {"genres", "g"})
     public String showAllGenres(){
-        return genreDao.getAll().toString();
+        return genreService.getAllGenres().toString();
     }
 
     @ShellMethod(value = "Show Authors", key = {"authors", "a"})
     public String showAllAuthors(){
-        return authorDao.getAll().toString();
+        return authorService.getAllAuthors().toString();
     }
 }

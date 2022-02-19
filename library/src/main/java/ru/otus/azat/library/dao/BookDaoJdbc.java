@@ -19,15 +19,9 @@ public class BookDaoJdbc implements BookDao{
     private final JdbcOperations jdbc;
     private final NamedParameterJdbcOperations namedParameterJdbcOperations;
 
-    private final GenreDao genreDao;
-    private final AuthorDao authorDao;
-
-    public BookDaoJdbc(JdbcOperations jdbc, NamedParameterJdbcOperations namedParameterJdbcOperations,
-                       GenreDao genreDao, AuthorDao authorDao) {
+    public BookDaoJdbc(JdbcOperations jdbc, NamedParameterJdbcOperations namedParameterJdbcOperations) {
         this.jdbc = jdbc;
         this.namedParameterJdbcOperations = namedParameterJdbcOperations;
-        this.genreDao = genreDao;
-        this.authorDao = authorDao;
     }
 
     @Override
@@ -38,35 +32,25 @@ public class BookDaoJdbc implements BookDao{
 
     @Override
     public String create(Book book) {
-            namedParameterJdbcOperations.update("insert into books (id, title, author_id, genre_id) values (:id, :title, :author_id, :genre_id)",
-                    Map.of("id", book.getId(),
-                            "title", book.getTitle(),
+            namedParameterJdbcOperations.update("insert into books (title, author_id, genre_id) values ( :title, :author_id, :genre_id)",
+                    Map.of("title", book.getTitle(),
                             "author_id", book.getAuthor().getId(),
                             "genre_id", book.getGenre().getId()));
         return book + " was created!";
     }
 
     @Override
-    public String updateById(Long id, String value) {
-        if (namedParameterJdbcOperations.update("update books set title = :value where id in (:id)",
+    public int updateById(Long id, String value) {
+        return namedParameterJdbcOperations.update("update books set title = :value where id in (:id)",
                     Map.of("id", id,
-                    "value", value)) == 0){
-            return "We don't have that book id!";
-        }else{
-            return "Book title was updated!";
-        }
+                    "value", value));
     }
 
     @Override
-    public String deleteById(Long id) {
+    public int deleteById(Long id) {
         Map<String, Object> params = Collections.singletonMap("id", id);
-        if(namedParameterJdbcOperations.update(
-                "delete from books where id = :id", params
-        )==0){
-            return "We don't have that book id!";
-        }else {
-            return "Book was deleted!";
-        }
+        return namedParameterJdbcOperations.update(
+                "delete from books where id = :id", params);
     }
 
     @Override
