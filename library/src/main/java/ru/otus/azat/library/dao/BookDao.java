@@ -7,8 +7,8 @@ import java.util.List;
 public interface BookDao {
     public int count();
     String create(Book book);
-    String updateById(Long id, String value);
-    String deleteById(Long id);
+    int updateById(Long id, String value);
+    int deleteById(Long id);
     Book getById(Long id);
     List<Book> getAll();
 }
