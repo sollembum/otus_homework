@@ -10,6 +10,7 @@ import java.sql.SQLException;
 public class MainLibraryProject {
     public static void main(String[] args) throws SQLException {
         Console.main(args);
-        SpringApplication.run(MainLibraryProject.class);
+        SpringApplication.run(MainLibraryProject.class, args);
+
     }
 }

@@ -31,12 +31,14 @@ public class Commands {
 
     @ShellMethod(value = "Update book by id", key = {"upd", "updTitle"})
     public String updTitle(Long id, String value){
-        return bookService.updateBook(id, value);
+        bookService.updateBook(id, value);
+        return "Book was updated!";
     }
 
     @ShellMethod(value = "Delete book by id", key = {"delete", "deleteBook"})
     public String deleteBookById(Long id){
-        return bookService.deleteBook(id);
+        bookService.deleteBook(id);
+        return "Book was deleted!";
     }
 
     @ShellMethod(value = "Find book by id", key = {"find", "findBook"})

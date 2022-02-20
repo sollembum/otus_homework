@@ -1,4 +1,4 @@
-package ru.otus.azat.library.dao;
+package ru.otus.azat.library.repositories;
 
 import ru.otus.azat.library.entities.Book;
 

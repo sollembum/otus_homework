@@ -1,7 +1,7 @@
 package ru.otus.azat.library.services;
 
 import org.springframework.stereotype.Service;
-import ru.otus.azat.library.dao.GenreDao;
+import ru.otus.azat.library.repositories.GenreRepository;
 import ru.otus.azat.library.entities.Genre;
 import ru.otus.azat.library.exceptions.GenreException;
 
@@ -9,9 +9,9 @@ import java.util.List;
 
 @Service
 public class GenreServiceImpl implements GenreService{
-    private final GenreDao genreDao;
+    private final GenreRepository genreDao;
 
-    public GenreServiceImpl(GenreDao genreDao) {
+    public GenreServiceImpl(GenreRepository genreDao) {
         this.genreDao = genreDao;
     }
     @Override

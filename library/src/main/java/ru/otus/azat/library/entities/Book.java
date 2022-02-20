@@ -34,6 +34,11 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Книга: '" + title + "'" + author.toString() + genre.toString() + bookComment.toString();
+        String noCommentBook = "Книга: '" + title + "' " + author.toString() + genre.toString();
+        if (bookComment == null){
+            return noCommentBook + System.lineSeparator();
+        }else {
+            return noCommentBook + bookComment + System.lineSeparator();
+        }
     }
 }

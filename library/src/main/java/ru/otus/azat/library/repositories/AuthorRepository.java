@@ -1,10 +1,10 @@
-package ru.otus.azat.library.dao;
+package ru.otus.azat.library.repositories;
 
 import ru.otus.azat.library.entities.Author;
 
 import java.util.List;
 
-public interface AuthorDao {
+public interface AuthorRepository {
     Author getByName(String name);
     List<Author> getAll();
 }

@@ -22,11 +22,11 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "fullName", nullable = false, unique = true)
+    @Column(name = "FULLNAME", nullable = false, unique = true)
     private String fullName;
 
     @Override
     public String toString() {
-        return "Имя автора: " + fullName;
+        return "Имя автора: " + fullName + " ";
     }
 }
