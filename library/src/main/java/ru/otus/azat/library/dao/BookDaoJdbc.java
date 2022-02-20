@@ -31,17 +31,17 @@ public class BookDaoJdbc implements BookDao{
     }
 
     @Override
-    public String create(Book book) {
+    public Book create(Book book) {
             namedParameterJdbcOperations.update("insert into books (title, author_id, genre_id) values ( :title, :author_id, :genre_id)",
                     Map.of("title", book.getTitle(),
                             "author_id", book.getAuthor().getId(),
                             "genre_id", book.getGenre().getId()));
-        return book + " was created!";
+        return book;
     }
 
     @Override
     public int updateById(Long id, String value) {
-        return namedParameterJdbcOperations.update("update books set title = :value where id in (:id)",
+        return namedParameterJdbcOperations.update("update books set title = :value where id = :id",
                     Map.of("id", id,
                     "value", value));
     }

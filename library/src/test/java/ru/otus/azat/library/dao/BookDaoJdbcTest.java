@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @JdbcTest
-@Import({BookDaoJdbc.class, GenreDaoJdbc.class, AuthorDaoJdbc.class})
+@Import({BookDaoJdbc.class})
 public class BookDaoJdbcTest {
 
     public static final String TEST_AUTHOR = "duma";
@@ -24,7 +24,7 @@ public class BookDaoJdbcTest {
     @Autowired
     private BookDaoJdbc bookDao;
 
-    int EXPECTED_BOOKS = 2;
+    private static final int EXPECTED_BOOKS = 2;
 
     @Test
     public void countBooksTest(){
