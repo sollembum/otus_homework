@@ -2,20 +2,23 @@ package ru.otus.azat.library.entities;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 @Entity
 @Table(name = "books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -28,17 +31,19 @@ public class Book {
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
-    @OneToOne
-    @JoinColumn(name = "comment_id")
-    private BookComment bookComment;
+    @OneToMany(targetEntity = BookComment.class,
+            fetch = FetchType.EAGER , cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JoinColumn(name = "book_id")
+    private List<BookComment> bookComments;
 
     @Override
     public String toString() {
         String noCommentBook = "Книга: '" + title + "' " + author.toString() + genre.toString();
-        if (bookComment == null){
+        if (bookComments == null){
             return noCommentBook + System.lineSeparator();
         }else {
-            return noCommentBook + bookComment + System.lineSeparator();
+            return noCommentBook + bookComments + System.lineSeparator();
         }
     }
 }

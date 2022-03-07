@@ -1,17 +1,24 @@
 package ru.otus.azat.library.repositories;
 
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.azat.library.entities.Book;
+import ru.otus.azat.library.entities.BookComment;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BookRepository {
     Book save(Book student);
-    Optional<Book> findById(Long id);
+    Book findById(long id);
 
     List<Book> findAll();
     List<Book> findByName(String name);
 
-    void updateNameById(Long id, String name);
-    void deleteById(Long id);
+    void updateNameById(long id, String name);
+
+    @Transactional
+    boolean addComment(long bookId, String feedback);
+
+    List<BookComment> findAllCommentsById(long id);
+
+    void deleteById(long id);
 }

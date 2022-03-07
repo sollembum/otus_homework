@@ -1,6 +1,8 @@
 package ru.otus.azat.library.services;
 
 import org.springframework.stereotype.Service;
+import ru.otus.azat.library.entities.Author;
+import ru.otus.azat.library.entities.Genre;
 import ru.otus.azat.library.repositories.BookRepository;
 import ru.otus.azat.library.entities.Book;
 import ru.otus.azat.library.exceptions.AuthorException;
@@ -8,7 +10,6 @@ import ru.otus.azat.library.exceptions.BookException;
 import ru.otus.azat.library.exceptions.GenreException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -29,6 +30,7 @@ public class BookServiceImpl implements BookService {
             newBook.setTitle(title);
             newBook.setAuthor(authorService.getAuthor(authorFullName));
             newBook.setGenre(genreService.getGenre(genreName));
+            //newBook.setBookComments(bookRepository.findAllCommentsById(1L));
             bookRepository.save(newBook);
             return newBook;
         }
@@ -48,7 +50,7 @@ public class BookServiceImpl implements BookService {
         bookRepository.deleteById(id) ;
     }
     @Override
-    public Optional<Book> findBook(Long id){
+    public Book findBook(Long id){
         try {
             return bookRepository.findById(id);
         } catch (Exception e) {

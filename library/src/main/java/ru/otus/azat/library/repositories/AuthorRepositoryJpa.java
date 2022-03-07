@@ -2,14 +2,15 @@ package ru.otus.azat.library.repositories;
 
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.azat.library.entities.Author;
+import ru.otus.azat.library.entities.Genre;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
-@Transactional
 @Repository
 public class AuthorRepositoryJpa implements AuthorRepository {
 
@@ -20,11 +21,16 @@ public class AuthorRepositoryJpa implements AuthorRepository {
         this.em = em;
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public Author getByName(String name) {
-        return null;
+    public Author getByName(String fullname) {
+        TypedQuery<Author> query = em.createQuery("select s from Author s where s.fullName = :fullname",
+                Author.class);
+        query.setParameter("fullname", fullname);
+        return query.getSingleResult();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Author> getAll() {
         return em.createQuery("select s from Author s",
