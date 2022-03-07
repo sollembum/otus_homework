@@ -21,7 +21,7 @@ public class BookCommentRepositoryJpa implements BookCommentRepository{
     @Transactional
     @Override
     public BookComment save(BookComment comment) {
-        if (comment.getId() <= 0){//здесь выпадает npe воообще не понимаю почему
+        if (comment.getId() <= 0){
             em.persist(comment);
             return comment;
         }else {
