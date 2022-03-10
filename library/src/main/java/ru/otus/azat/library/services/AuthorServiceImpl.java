@@ -1,6 +1,7 @@
 package ru.otus.azat.library.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.azat.library.repositories.AuthorRepository;
 import ru.otus.azat.library.entities.Author;
 import ru.otus.azat.library.exceptions.AuthorException;
@@ -14,6 +15,7 @@ public class AuthorServiceImpl implements AuthorService{
     public AuthorServiceImpl(AuthorRepository authorDao) {
         this.authorDao = authorDao;
     }
+    @Transactional(readOnly = true)
     @Override
     public Author getAuthor(String fullname){
         try {
@@ -22,6 +24,7 @@ public class AuthorServiceImpl implements AuthorService{
             throw new AuthorException();
         }
     }
+    @Transactional(readOnly = true)
     @Override
     public List<Author> getAllAuthors(){
         return authorDao.getAll();

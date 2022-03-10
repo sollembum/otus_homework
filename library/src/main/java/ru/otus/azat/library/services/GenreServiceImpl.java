@@ -1,6 +1,7 @@
 package ru.otus.azat.library.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.azat.library.repositories.GenreRepository;
 import ru.otus.azat.library.entities.Genre;
 import ru.otus.azat.library.exceptions.GenreException;
@@ -14,6 +15,7 @@ public class GenreServiceImpl implements GenreService{
     public GenreServiceImpl(GenreRepository genreDao) {
         this.genreDao = genreDao;
     }
+    @Transactional(readOnly = true)
     @Override
     public Genre getGenre(String name){
         try {
@@ -22,6 +24,7 @@ public class GenreServiceImpl implements GenreService{
             throw new GenreException();
         }
     }
+    @Transactional(readOnly = true)
     @Override
     public List<Genre> getAllGenres(){
         return genreDao.getAll();

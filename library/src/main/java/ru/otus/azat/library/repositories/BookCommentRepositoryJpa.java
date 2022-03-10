@@ -18,7 +18,6 @@ public class BookCommentRepositoryJpa implements BookCommentRepository{
         this.em = em;
     }
 
-    @Transactional
     @Override
     public BookComment save(BookComment comment) {
         if (comment.getId() <= 0){
@@ -28,12 +27,12 @@ public class BookCommentRepositoryJpa implements BookCommentRepository{
             return em.merge(comment);
         }
     }
-    @Transactional(readOnly = true)
+
     @Override
     public Optional<BookComment> findById(long id) {
         return Optional.ofNullable(em.find(BookComment.class, id));
     }
-    @Transactional
+
     @Override
     public void updateCommentById(long id, String comment) {
         Query query = em.createQuery("update BookComment s " +
@@ -43,7 +42,7 @@ public class BookCommentRepositoryJpa implements BookCommentRepository{
         query.setParameter("id", id);
         query.executeUpdate();
     }
-    @Transactional
+
     @Override
     public void deleteById(long id) {
         Query query = em.createQuery("delete " +

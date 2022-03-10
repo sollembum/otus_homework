@@ -21,7 +21,7 @@ public class GenreRepositoryJpa implements GenreRepository {
         this.em = em;
     }
 
-    @Transactional(readOnly = true)
+
     @Override
     public Genre getByName(String name) {
         TypedQuery<Genre> query = em.createQuery("select s from Genre s where s.name = :name",
@@ -30,7 +30,7 @@ public class GenreRepositoryJpa implements GenreRepository {
         return query.getSingleResult();
     }
 
-    @Transactional(readOnly = true)
+
     @Override
     public List<Genre> getAll() {
         return em.createQuery("select s from Genre s",

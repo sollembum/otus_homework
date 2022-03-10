@@ -23,7 +23,6 @@ public class BookRepositoryJpa implements BookRepository{
         this.em = em;
     }
 
-    @Transactional
     @Override
     public Book save(Book book) {
         if (book.getId() <= 0){
@@ -33,20 +32,19 @@ public class BookRepositoryJpa implements BookRepository{
             return em.merge(book);
         }
     }
-    @Transactional(readOnly = true)
+
     @Override
     public Book findById(long id) {
         return Optional.ofNullable(em.find(Book.class, id)).get();
     }
 
-    @Transactional(readOnly = true)
+
     @Override
     public List<Book> findAll() {
         return em.createQuery("select s from Book s",
                 Book.class).getResultList();
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<Book> findByName(String title) {
         TypedQuery<Book> query = em.createQuery("select s " +
@@ -57,7 +55,6 @@ public class BookRepositoryJpa implements BookRepository{
         return query.getResultList();
     }
 
-    @Transactional
     @Override
     public void updateNameById(long id, String title) {
         Query query = em.createQuery("update Book s " +
@@ -67,19 +64,7 @@ public class BookRepositoryJpa implements BookRepository{
         query.setParameter("id", id);
         query.executeUpdate();
     }
-    @Transactional
-    @Override
-    public boolean addComment(long bookId, String feedback) {
-        val bookComments = findById(bookId).getBookComments();
-        BookComment comment = new BookComment(feedback);
-        return bookComments.add(comment);
-    }
-    @Override
-    public List<BookComment> findAllCommentsById(long id) {
-        val book = em.find(Book.class, id);
-        return book.getBookComments();
-    }
-    @Transactional
+
     @Override
     public void deleteById(long id) {
         Query query = em.createQuery("delete " +

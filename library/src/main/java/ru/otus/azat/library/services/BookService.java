@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface BookService {
     Book createNewBook(String title, String authorFullName, String genreName);
-    void updateBook(Long id, String value);
-    void deleteBook(Long id);
-    Book findBook(Long id);
+    void updateBook(long id, String value);
+    void deleteBook(long id);
+    Book findBook(long id);
     List<Book> findAllBooks();
     int countBooks();
 }

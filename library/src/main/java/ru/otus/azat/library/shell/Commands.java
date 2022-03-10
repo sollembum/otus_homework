@@ -6,6 +6,7 @@ import ru.otus.azat.library.entities.Author;
 import ru.otus.azat.library.entities.Book;
 import ru.otus.azat.library.entities.Genre;
 import ru.otus.azat.library.services.AuthorService;
+import ru.otus.azat.library.services.BookCommentService;
 import ru.otus.azat.library.services.BookService;
 import ru.otus.azat.library.services.GenreService;
 
@@ -16,15 +17,19 @@ public class Commands {
     private final BookService bookService;
     private final GenreService genreService;
     private final AuthorService authorService;
+    private final BookCommentService bookCommentService;
 
-    public Commands(BookService bookService, GenreService genreService, AuthorService authorService) {
+    public Commands(BookService bookService, GenreService genreService,
+                    AuthorService authorService, BookCommentService bookCommentService) {
         this.bookService = bookService;
         this.genreService = genreService;
         this.authorService = authorService;
+        this.bookCommentService = bookCommentService;
     }
     @ShellMethod(value = "Create new comment", key = {"cc"})
-    public String createComment(String comment, Long book_id){
-        return "хз";
+    public String createComment(String comment, long book_id){
+        bookCommentService.saveComment(comment, book_id);
+        return "Your comment was added";
     }
     @ShellMethod(value = "Create new book", key = {"create"})
     public String createBook(String title, String authorFullName, String genreName){
@@ -37,19 +42,19 @@ public class Commands {
     }
 
     @ShellMethod(value = "Update book by id", key = {"upd", "updTitle"})
-    public String updTitle(Long id, String value){
+    public String updTitle(long id, String value){
         bookService.updateBook(id, value);
         return "Book was updated!";
     }
 
     @ShellMethod(value = "Delete book by id", key = {"delete", "deleteBook"})
-    public String deleteBookById(Long id){
+    public String deleteBookById(long id){
         bookService.deleteBook(id);
         return "Book was deleted!";
     }
 
     @ShellMethod(value = "Find book by id", key = {"find", "findBook"})
-    public String getBookById(Long id){
+    public String getBookById(long id){
         return bookService.findBook(id).toString();
     }
 
@@ -62,12 +67,6 @@ public class Commands {
                     ", Заголовок книги = " + book.getTitle() +
                     ", Автор книги = " + book.getAuthor().getFullName() +
                     ", Жанр книги = " + book.getGenre().getName());
-            if (book.getBookComments() == null){
-                message.append(System.lineSeparator());
-            }else{
-                message.append(", Комментарий = " + book.getBookComments().toString() +
-                        System.lineSeparator());
-            }
         }
         return message.toString();
     }

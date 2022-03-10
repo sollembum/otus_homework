@@ -21,7 +21,6 @@ public class AuthorRepositoryJpa implements AuthorRepository {
         this.em = em;
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Author getByName(String fullname) {
         TypedQuery<Author> query = em.createQuery("select s from Author s where s.fullName = :fullname",
@@ -30,7 +29,6 @@ public class AuthorRepositoryJpa implements AuthorRepository {
         return query.getSingleResult();
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<Author> getAll() {
         return em.createQuery("select s from Author s",
