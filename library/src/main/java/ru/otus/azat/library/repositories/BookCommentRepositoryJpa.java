@@ -1,12 +1,12 @@
 package ru.otus.azat.library.repositories;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.azat.library.entities.BookComment;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -29,18 +29,24 @@ public class BookCommentRepositoryJpa implements BookCommentRepository{
     }
 
     @Override
-    public Optional<BookComment> findById(long id) {
-        return Optional.ofNullable(em.find(BookComment.class, id));
+    public BookComment findById(long id) {
+        return Optional.ofNullable(em.find(BookComment.class, id)).get();
     }
 
     @Override
-    public void updateCommentById(long id, String comment) {
+    public List<BookComment> findAll() {
+        return em.createQuery("select s from BookComment s join fetch s.book",
+                BookComment.class).getResultList();
+    }
+    @Override
+    public BookComment updateCommentById(long id, String comment) {
         Query query = em.createQuery("update BookComment s " +
                 "set s.comment = :comment " +
                 "where s.id = :id");
         query.setParameter("comment", comment);
         query.setParameter("id", id);
         query.executeUpdate();
+        return findById(id);
     }
 
     @Override

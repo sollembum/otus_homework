@@ -2,49 +2,63 @@ package ru.otus.azat.library.shell;
 
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import ru.otus.azat.library.entities.Author;
-import ru.otus.azat.library.entities.Book;
-import ru.otus.azat.library.entities.Genre;
-import ru.otus.azat.library.services.AuthorService;
-import ru.otus.azat.library.services.BookCommentService;
-import ru.otus.azat.library.services.BookService;
-import ru.otus.azat.library.services.GenreService;
-
-import java.util.List;
+import ru.otus.azat.library.entityServices.AuthorService;
+import ru.otus.azat.library.entityServices.BookCommentService;
+import ru.otus.azat.library.entityServices.BookService;
+import ru.otus.azat.library.entityServices.GenreService;
+import ru.otus.azat.library.utilityServices.Interpreter;
 
 @ShellComponent
 public class Commands {
+    private final Interpreter interpreter;
     private final BookService bookService;
     private final GenreService genreService;
     private final AuthorService authorService;
     private final BookCommentService bookCommentService;
 
-    public Commands(BookService bookService, GenreService genreService,
+    public Commands(Interpreter interpreter, BookService bookService, GenreService genreService,
                     AuthorService authorService, BookCommentService bookCommentService) {
+        this.interpreter = interpreter;
         this.bookService = bookService;
         this.genreService = genreService;
         this.authorService = authorService;
         this.bookCommentService = bookCommentService;
     }
+    @ShellMethod (value = "Update comment", key = {"uc"})
+    public String updateComment(long id, String comment){
+        return interpreter.showToUser(
+                bookCommentService.updComment(id, comment)
+        ) + " - was updated!";
+    }
+    @ShellMethod(value = "Delete comment", key = {"dc"})
+    public String deleteComment(long id){
+        bookCommentService.deleteComment(id);
+        return "Comment was deleted";
+    }
+    @ShellMethod(value = "Find all comments", key = {"comments"})
+    public String getAllComments(){
+        return interpreter.showToUser(
+                bookCommentService.findAll()
+        );
+    }
     @ShellMethod(value = "Create new comment", key = {"cc"})
     public String createComment(String comment, long book_id){
-        bookCommentService.saveComment(comment, book_id);
-        return "Your comment was added";
+        return interpreter.showToUser(
+            bookCommentService.saveComment(comment, book_id)
+        ) +  " - was created!";
     }
     @ShellMethod(value = "Create new book", key = {"create"})
     public String createBook(String title, String authorFullName, String genreName){
-        Book book = bookService.createNewBook(title, authorFullName, genreName);
-        return book + "was created!";
-    }
-    @ShellMethod(value = "Books count", key = {"cnt", "count"})
-    public String countBooks(){
-        return String.valueOf(bookService.countBooks());
+        return interpreter.showToUser(
+                bookService.createNewBook(title, authorFullName, genreName)
+        )+ " - was created!";
     }
 
     @ShellMethod(value = "Update book by id", key = {"upd", "updTitle"})
     public String updTitle(long id, String value){
-        bookService.updateBook(id, value);
-        return "Book was updated!";
+        return interpreter.showToUser(
+            bookService.updateBook(id, value)
+        ) + " - was updated!";
     }
 
     @ShellMethod(value = "Delete book by id", key = {"delete", "deleteBook"})
@@ -55,43 +69,29 @@ public class Commands {
 
     @ShellMethod(value = "Find book by id", key = {"find", "findBook"})
     public String getBookById(long id){
-        return bookService.findBook(id).toString();
+        return interpreter.showToUser(
+                bookService.findBook(id)
+        );
     }
 
     @ShellMethod(value = "Show Books", key = {"books", "b"})
     public String showAllBooks(){
-        StringBuilder message = new StringBuilder();
-        List<Book> lob = bookService.findAllBooks();
-        for (Book book : lob){
-            message.append("Id книги = " + book.getId() +
-                    ", Заголовок книги = " + book.getTitle() +
-                    ", Автор книги = " + book.getAuthor().getFullName() +
-                    ", Жанр книги = " + book.getGenre().getName());
-        }
-        return message.toString();
+        return interpreter.showToUser(
+                bookService.findAllBooks()
+        );
     }
 
     @ShellMethod(value = "Show Genres", key = {"genres", "g"})
     public String showAllGenres(){
-        StringBuilder message = new StringBuilder();
-        List<Genre> log = genreService.getAllGenres();
-        for (Genre genre : log){
-            message.append("Id жанра = " + genre.getId() +
-                    ", Название жанра = " + genre.getName() +
-                    System.lineSeparator());
-        }
-        return message.toString();
+        return interpreter.showToUser(
+                genreService.getAllGenres()
+        );
     }
 
     @ShellMethod(value = "Show Authors", key = {"authors", "a"})
     public String showAllAuthors(){
-        StringBuilder message = new StringBuilder();
-        List<Author> loa = authorService.getAllAuthors();
-        for (Author author : loa){
-            message.append("Id автора = " + author.getId() +
-                    ", Имя автора = " + author.getFullName() +
-                    System.lineSeparator());
-        }
-        return message.toString();
+        return interpreter.showToUser(
+                authorService.getAllAuthors()
+        );
     }
 }

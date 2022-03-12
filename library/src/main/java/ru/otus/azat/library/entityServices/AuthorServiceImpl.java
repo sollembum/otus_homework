@@ -1,4 +1,4 @@
-package ru.otus.azat.library.services;
+package ru.otus.azat.library.entityServices;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

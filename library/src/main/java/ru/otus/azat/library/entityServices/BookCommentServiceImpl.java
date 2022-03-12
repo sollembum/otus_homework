@@ -1,9 +1,11 @@
-package ru.otus.azat.library.services;
+package ru.otus.azat.library.entityServices;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.azat.library.entities.BookComment;
 import ru.otus.azat.library.repositories.BookCommentRepository;
+
+import java.util.List;
 
 @Service
 public class BookCommentServiceImpl implements BookCommentService{
@@ -20,7 +22,21 @@ public class BookCommentServiceImpl implements BookCommentService{
         BookComment bc = new BookComment();
         bc.setComment(comment);
         bc.setBook(bookService.findBook(bookId));
-        bookCommentRepository.save(bc);
-        return null;
+        return bookCommentRepository.save(bc);
+    }
+    @Transactional(readOnly = true)
+    @Override
+    public List<BookComment> findAll(){
+       return bookCommentRepository.findAll();
+    }
+    @Transactional
+    @Override
+    public BookComment updComment(long id, String comment){
+        return bookCommentRepository.updateCommentById(id, comment);
+    }
+    @Transactional
+    @Override
+    public void deleteComment(long id){
+        bookCommentRepository.deleteById(id);
     }
 }

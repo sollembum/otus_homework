@@ -1,14 +1,6 @@
-package ru.otus.azat.library.services;
+package ru.otus.azat.library.entityServices;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.otus.azat.library.entities.Author;
-import ru.otus.azat.library.entities.Book;
-import ru.otus.azat.library.entities.Genre;
-import ru.otus.azat.library.exceptions.AuthorException;
-import ru.otus.azat.library.exceptions.BookException;
-import ru.otus.azat.library.exceptions.GenreException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

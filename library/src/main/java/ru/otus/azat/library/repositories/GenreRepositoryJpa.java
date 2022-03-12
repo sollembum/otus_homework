@@ -1,7 +1,6 @@
 package ru.otus.azat.library.repositories;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.azat.library.entities.Genre;
 
 import javax.persistence.EntityManager;

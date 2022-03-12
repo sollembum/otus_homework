@@ -1,4 +1,4 @@
-package ru.otus.azat.library.services;
+package ru.otus.azat.library.entityServices;
 
 import ru.otus.azat.library.entities.Genre;
 

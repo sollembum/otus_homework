@@ -26,7 +26,7 @@ public class BookRepositoryJpa implements BookRepository{
     @Override
     public Book save(Book book) {
         if (book.getId() <= 0){
-            em.persist(book); //почему-то объект автора detached
+            em.persist(book);
             return book;
         }else {
             return em.merge(book);
@@ -35,13 +35,16 @@ public class BookRepositoryJpa implements BookRepository{
 
     @Override
     public Book findById(long id) {
-        return Optional.ofNullable(em.find(Book.class, id)).get();
+        TypedQuery<Book> query = em.createQuery("select s from Book s join fetch s.author join fetch s.genre " +
+                "where s.id = :id", Book.class);
+        query.setParameter("id", id);
+        return query.getResultList().get(0);
     }
 
 
     @Override
     public List<Book> findAll() {
-        return em.createQuery("select s from Book s",
+        return em.createQuery("select s from Book s join fetch s.author join fetch s.genre",
                 Book.class).getResultList();
     }
 
@@ -56,13 +59,14 @@ public class BookRepositoryJpa implements BookRepository{
     }
 
     @Override
-    public void updateNameById(long id, String title) {
+    public Book updateNameById(long id, String title) {
         Query query = em.createQuery("update Book s " +
                 "set s.title = :title " +
                 "where s.id = :id");
         query.setParameter("title", title);
         query.setParameter("id", id);
         query.executeUpdate();
+        return findById(id);
     }
 
     @Override

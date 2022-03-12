@@ -1,9 +1,7 @@
-package ru.otus.azat.library.services;
+package ru.otus.azat.library.entityServices;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.azat.library.entities.Author;
-import ru.otus.azat.library.entities.Genre;
 import ru.otus.azat.library.repositories.BookRepository;
 import ru.otus.azat.library.entities.Book;
 import ru.otus.azat.library.exceptions.AuthorException;
@@ -31,9 +29,7 @@ public class BookServiceImpl implements BookService {
             newBook.setTitle(title);
             newBook.setAuthor(authorService.getAuthor(authorFullName));
             newBook.setGenre(genreService.getGenre(genreName));
-            //newBook.setBookComments(bookRepository.findAllCommentsById(1L));
-            bookRepository.save(newBook);
-            return newBook;
+            return bookRepository.save(newBook);
         }
         catch (AuthorException e){
             throw new AuthorException("We don't have that author", e);
@@ -44,14 +40,15 @@ public class BookServiceImpl implements BookService {
     }
     @Transactional
     @Override
-    public void updateBook(long id, String value){
-        bookRepository.updateNameById(id, value);
+    public Book updateBook(long id, String value){
+       return bookRepository.updateNameById(id, value);
     }
     @Transactional
     @Override
     public void deleteBook(long id){
         bookRepository.deleteById(id) ;
     }
+
     @Transactional(readOnly = true)
     @Override
     public Book findBook(long id){
@@ -61,14 +58,11 @@ public class BookServiceImpl implements BookService {
             throw new BookException("We don't have that book id", e) ;
         }
     }
+
     @Transactional(readOnly = true)
     @Override
     public List<Book> findAllBooks(){
        return bookRepository.findAll();
     }
-    @Override
-    public int countBooks(){
-      //return bookRepository.count();
-        return 0;
-    }
+
 }
