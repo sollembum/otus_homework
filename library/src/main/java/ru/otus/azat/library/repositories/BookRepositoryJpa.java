@@ -1,17 +1,12 @@
 package ru.otus.azat.library.repositories;
 
-import lombok.val;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.azat.library.entities.Book;
-import ru.otus.azat.library.entities.BookComment;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Optional;
 
 
 @Repository
@@ -48,7 +43,7 @@ public class BookRepositoryJpa implements BookRepository{
                 Book.class).getResultList();
     }
 
-    @Override
+    /*@Override
     public List<Book> findByName(String title) {
         TypedQuery<Book> query = em.createQuery("select s " +
                         "from Book s " +
@@ -56,7 +51,7 @@ public class BookRepositoryJpa implements BookRepository{
                 Book.class);
         query.setParameter("title", title);
         return query.getResultList();
-    }
+    }*/
 
     @Override
     public Book updateNameById(long id, String title) {

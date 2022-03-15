@@ -20,7 +20,7 @@ public class AuthorServiceImpl implements AuthorService{
     public Author getAuthor(String fullname){
         try {
             return authorDao.getByName(fullname);
-        }catch (AuthorException e){
+        }catch (Exception e){
             throw new AuthorException();
         }
     }

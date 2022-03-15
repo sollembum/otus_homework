@@ -20,7 +20,7 @@ public class GenreServiceImpl implements GenreService{
     public Genre getGenre(String name){
         try {
             return genreDao.getByName(name);
-        }catch (GenreException e){
+        }catch (Exception e){
             throw new GenreException();
         }
     }

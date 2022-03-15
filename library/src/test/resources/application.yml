@@ -2,7 +2,10 @@ spring:
   shell:
     interactive:
       enabled: false
-
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
   main:
     allow-circular-references: true
   datasource:

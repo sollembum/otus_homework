@@ -14,3 +14,6 @@ insert into authors (fullname) values ('gogol');
 
 insert into books (title, author_id, genre_id) values ('3 musketeers', 1, 5);
 insert into books (title, author_id, genre_id) values ('evgeniy onegin', 2, 6);
+
+insert into book_comments (comment, book_id) values ('very good', 2);
+insert into book_comments (comment, book_id) values ('very bad', 2);

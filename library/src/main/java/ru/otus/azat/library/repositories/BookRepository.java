@@ -9,7 +9,6 @@ public interface BookRepository {
     Book findById(long id);
 
     List<Book> findAll();
-    List<Book> findByName(String name);
 
     Book updateNameById(long id, String name);
     void deleteById(long id);
