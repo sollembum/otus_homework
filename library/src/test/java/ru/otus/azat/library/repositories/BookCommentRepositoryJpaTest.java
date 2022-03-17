@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
-import ru.otus.azat.library.entities.Book;
 import ru.otus.azat.library.entities.BookComment;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 @Import(BookCommentRepositoryJpa.class)
-public class BookCommentJpaTest {
+public class BookCommentRepositoryJpaTest {
     @Autowired
     private BookCommentRepositoryJpa bookCommentRepository;
     @Autowired
@@ -22,7 +21,7 @@ public class BookCommentJpaTest {
 
     @Test
     void successFindAll(){
-        List<BookComment> expectedBookComment = bookCommentRepository.findAll();
+        List<BookComment> expectedBookComment = bookCommentRepository.findCommentsByBook(2l);
         assertEquals(expectedBookComment.size(), 2);
     }
     @Test

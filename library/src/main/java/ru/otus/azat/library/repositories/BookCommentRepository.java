@@ -8,7 +8,7 @@ public interface BookCommentRepository {
     BookComment save(BookComment comment);
     BookComment findById(long id);
 
-    List<BookComment> findAll();
+    List<BookComment> findCommentsByBook(long bookId);
 
     BookComment updateCommentById(long id, String name);
     void deleteById(long id);

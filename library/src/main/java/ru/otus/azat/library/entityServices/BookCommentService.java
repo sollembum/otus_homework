@@ -8,7 +8,7 @@ import java.util.List;
 public interface BookCommentService {
     BookComment saveComment(String comment,long bookId);
 
-    List<BookComment> findAll();
+    List<BookComment> findCommentsByBook(long BookId);
 
     @Transactional
     BookComment updComment(long id, String comment);

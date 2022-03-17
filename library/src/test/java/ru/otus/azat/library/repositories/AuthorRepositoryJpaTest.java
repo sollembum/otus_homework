@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 @Import(AuthorRepositoryJpa.class)
-public class AuthorJpaTest {
+public class AuthorRepositoryJpaTest {
     private static final String DUMA = "duma";
 
     @Autowired
