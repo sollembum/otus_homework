@@ -34,9 +34,11 @@ public class BookCommentRepositoryJpa implements BookCommentRepository{
     }
 
     @Override
-    public List<BookComment> findAll() {
-        return em.createQuery("select s from BookComment s join fetch s.book",
-                BookComment.class).getResultList();
+    public List<BookComment> findCommentsByBook(long bookId) {
+        Query query = em.createQuery("select s from BookComment s where s.book.id = :bookId",
+                BookComment.class);
+        query.setParameter("bookId", bookId);
+        return query.getResultList();
     }
     @Override
     public BookComment updateCommentById(long id, String comment) {

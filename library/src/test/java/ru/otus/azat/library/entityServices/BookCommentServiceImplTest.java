@@ -15,7 +15,7 @@ public class BookCommentServiceImplTest {
     private BookCommentServiceImpl commentService;
     @Test
     void successSaveComment(){
-        commentService.saveComment("newTestComment",1l);
-        assertEquals(3,commentService.findAll().size());
+        commentService.saveComment("newTestComment",2l);
+        assertEquals(3,commentService.findCommentsByBook(2l).size());
     }
 }

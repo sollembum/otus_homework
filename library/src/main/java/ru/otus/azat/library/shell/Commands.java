@@ -35,10 +35,10 @@ public class Commands {
         bookCommentService.deleteComment(id);
         return "Comment was deleted";
     }
-    @ShellMethod(value = "Find all comments", key = {"comments"})
-    public String getAllComments(){
+    @ShellMethod(value = "Find all comments for book", key = {"comments"})
+    public String getCommentsByBook(long bookId){
         return interpreter.showToUser(
-                bookCommentService.findAll()
+                bookCommentService.findCommentsByBook(bookId)
         );
     }
     @ShellMethod(value = "Create new comment", key = {"cc"})

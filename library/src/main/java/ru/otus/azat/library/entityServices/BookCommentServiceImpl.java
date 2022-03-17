@@ -26,8 +26,8 @@ public class BookCommentServiceImpl implements BookCommentService{
     }
     @Transactional(readOnly = true)
     @Override
-    public List<BookComment> findAll(){
-       return bookCommentRepository.findAll();
+    public List<BookComment> findCommentsByBook(long bookId){
+       return bookCommentRepository.findCommentsByBook(bookId);
     }
     @Transactional
     @Override

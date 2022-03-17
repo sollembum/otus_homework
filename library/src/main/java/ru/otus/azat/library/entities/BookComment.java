@@ -24,7 +24,7 @@ public class BookComment {
     @Column(name = "comment")
     private String comment;
 
-    @ManyToOne(targetEntity = Book.class, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Book.class, cascade = CascadeType.ALL,  fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private Book book;
 

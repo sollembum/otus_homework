@@ -13,7 +13,7 @@ import java.util.List;
 
 @DataJpaTest
 @Import(BookRepositoryJpa.class)
-public class BookJpaTest {
+public class BookRepositoryJpaTest {
     private static final String TEST_NAME = "evgeniy onegin";
 
     @Autowired
