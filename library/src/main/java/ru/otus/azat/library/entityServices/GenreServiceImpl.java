@@ -19,7 +19,7 @@ public class GenreServiceImpl implements GenreService{
     @Override
     public Genre getGenre(String name){
         try {
-            return genreDao.getByName(name);
+            return genreDao.findByName(name).get();
         }catch (Exception e){
             throw new GenreException();
         }
@@ -27,6 +27,6 @@ public class GenreServiceImpl implements GenreService{
     @Transactional(readOnly = true)
     @Override
     public List<Genre> getAllGenres(){
-        return genreDao.getAll();
+        return genreDao.findAll();
     }
 }

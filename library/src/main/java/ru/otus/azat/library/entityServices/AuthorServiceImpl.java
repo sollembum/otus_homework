@@ -19,7 +19,7 @@ public class AuthorServiceImpl implements AuthorService{
     @Override
     public Author getAuthor(String fullname){
         try {
-            return authorDao.getByName(fullname);
+            return authorDao.findByFullName(fullname).get();
         }catch (Exception e){
             throw new AuthorException();
         }
@@ -27,6 +27,6 @@ public class AuthorServiceImpl implements AuthorService{
     @Transactional(readOnly = true)
     @Override
     public List<Author> getAllAuthors(){
-        return authorDao.getAll();
+        return authorDao.findAll();
     }
 }
