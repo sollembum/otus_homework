@@ -1,0 +1,9 @@
+quize:
+  acceptable-lvl: 3
+  languages:
+    - ru-RU
+    - en-US
+
+spring:
+  main:
+    allow-circular-references: true
