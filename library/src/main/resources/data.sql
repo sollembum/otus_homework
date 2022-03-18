@@ -21,5 +21,5 @@ insert into books (title, author_id, genre_id) values ('graf monte christo', 1, 
 insert into books (title, author_id, genre_id) values ('harry potter and chamber of secrets', 3, 4);
 
 insert into book_comments (comment, book_id) values ('very good', 1);
-insert into book_comments (comment, book_id) values ('very bad', 2);
+insert into book_comments (comment, book_id) values ('very bad', 1);
 insert into book_comments (comment, book_id) values ('very reead', 3);

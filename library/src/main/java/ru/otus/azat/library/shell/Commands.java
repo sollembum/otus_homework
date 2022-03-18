@@ -26,9 +26,8 @@ public class Commands {
     }
     @ShellMethod (value = "Update comment", key = {"uc"})
     public String updateComment(long id, String comment){
-        return interpreter.showToUser(
-                bookCommentService.updComment(id, comment)
-        ) + " - was updated!";
+        bookCommentService.updComment(id, comment);
+        return "Was updated!";
     }
     @ShellMethod(value = "Delete comment", key = {"dc"})
     public String deleteComment(long id){
@@ -56,9 +55,8 @@ public class Commands {
 
     @ShellMethod(value = "Update book by id", key = {"upd", "updTitle"})
     public String updTitle(long id, String value){
-        return interpreter.showToUser(
-            bookService.updateBook(id, value)
-        ) + " - was updated!";
+        bookService.updateBook(id, value);
+        return "Was updated!";
     }
 
     @ShellMethod(value = "Delete book by id", key = {"delete", "deleteBook"})

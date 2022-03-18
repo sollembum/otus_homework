@@ -10,9 +10,9 @@ public interface BookCommentService {
 
     List<BookComment> findCommentsByBook(long BookId);
 
-    @Transactional
-    BookComment updComment(long id, String comment);
 
-    @Transactional
+    void updComment(long id, String comment);
+
+
     void deleteComment(long id);
 }

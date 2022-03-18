@@ -31,8 +31,8 @@ public class BookCommentServiceImpl implements BookCommentService{
     }
     @Transactional
     @Override
-    public BookComment updComment(long id, String comment){
-        return null;//bookCommentRepository.updateCommentById(id, comment);
+    public void updComment(long id, String comment){
+        bookCommentRepository.updateBookCommentById(comment, id);
     }
     @Transactional
     @Override

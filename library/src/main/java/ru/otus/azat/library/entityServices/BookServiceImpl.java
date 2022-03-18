@@ -40,8 +40,8 @@ public class BookServiceImpl implements BookService {
     }
     @Transactional
     @Override
-    public Book updateBook(long id, String value){
-       return null; //bookRepository.updateNameById(id, value);
+    public void updateBook(long id, String newTitle){
+        bookRepository.updateTitleById(newTitle, id);
     }
     @Transactional
     @Override
@@ -53,7 +53,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book findBook(long id){
         try {
-            return bookRepository.findById(id).get();
+            return bookRepository.findBookById(id).get();
         } catch (Exception e) {
             throw new BookException("We don't have that book id", e) ;
         }
