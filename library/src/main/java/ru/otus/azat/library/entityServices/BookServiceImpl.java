@@ -7,6 +7,7 @@ import ru.otus.azat.library.entities.Book;
 import ru.otus.azat.library.exceptions.AuthorException;
 import ru.otus.azat.library.exceptions.BookException;
 import ru.otus.azat.library.exceptions.GenreException;
+import ru.otus.azat.library.repositories.BookRepCustom;
 
 import java.util.List;
 
@@ -15,11 +16,14 @@ public class BookServiceImpl implements BookService {
     private final GenreService genreService;
     private final AuthorService authorService;
     private final BookRepository bookRepository;
+    private final BookRepCustom bookRepCustom;
 
-    public BookServiceImpl(GenreService genreService, AuthorService authorService, BookRepository bookRepository) {
+    public BookServiceImpl(GenreService genreService, AuthorService authorService,
+                           BookRepository bookRepository, BookRepCustom bookRepCustom) {
         this.genreService = genreService;
         this.authorService = authorService;
         this.bookRepository = bookRepository;
+        this.bookRepCustom = bookRepCustom;
     }
     @Transactional
     @Override
@@ -40,18 +44,18 @@ public class BookServiceImpl implements BookService {
     }
     @Transactional
     @Override
-    public void updateBook(long id, String newTitle){
-        bookRepository.updateTitleById(newTitle, id);
+    public void updateBook(String id, String newTitle){
+        bookRepCustom.updateTitleById(id, newTitle);
     }
     @Transactional
     @Override
-    public void deleteBook(long id){
+    public void deleteBook(String id){
         bookRepository.deleteById(id) ;
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Book findBook(long id){
+    public Book findBook(String id){
         try {
             return bookRepository.findBookById(id).get();
         } catch (Exception e) {

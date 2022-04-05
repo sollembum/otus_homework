@@ -25,23 +25,23 @@ public class Commands {
         this.bookCommentService = bookCommentService;
     }
     @ShellMethod (value = "Update comment", key = {"uc"})
-    public String updateComment(long id, String comment){
+    public String updateComment(String id, String comment){
         bookCommentService.updComment(id, comment);
         return "Was updated!";
     }
     @ShellMethod(value = "Delete comment", key = {"dc"})
-    public String deleteComment(long id){
+    public String deleteComment(String id){
         bookCommentService.deleteComment(id);
         return "Comment was deleted";
     }
-    @ShellMethod(value = "Find all comments for book", key = {"comments"})
-    public String getCommentsByBook(long bookId){
+    @ShellMethod(value = "Find all comments", key = {"comments"})
+    public String getCommentsByBook(){
         return interpreter.showToUser(
-                bookCommentService.findCommentsByBook(bookId)
+                bookCommentService.findComments()
         );
     }
     @ShellMethod(value = "Create new comment", key = {"cc"})
-    public String createComment(String comment, long book_id){
+    public String createComment(String comment, String book_id){
         return interpreter.showToUser(
             bookCommentService.saveComment(comment, book_id)
         ) +  " - was created!";
@@ -54,19 +54,19 @@ public class Commands {
     }
 
     @ShellMethod(value = "Update book by id", key = {"upd", "updTitle"})
-    public String updTitle(long id, String value){
+    public String updTitle(String id, String value){
         bookService.updateBook(id, value);
         return "Was updated!";
     }
 
     @ShellMethod(value = "Delete book by id", key = {"delete", "deleteBook"})
-    public String deleteBookById(long id){
+    public String deleteBookById(String id){
         bookService.deleteBook(id);
         return "Book was deleted!";
     }
 
     @ShellMethod(value = "Find book by id", key = {"find", "findBook"})
-    public String getBookById(long id){
+    public String getBookById(String id){
         return interpreter.showToUser(
                 bookService.findBook(id)
         );

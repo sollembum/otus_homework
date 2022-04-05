@@ -5,26 +5,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-@Entity
-@Table(name = "AUTHORS")
+@Document(collection = "authors")
 public class Author {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String id;
 
-    @Column(name = "fullname", nullable = false, unique = true)
     private String fullName;
 
     public Author(String authorFullName) {

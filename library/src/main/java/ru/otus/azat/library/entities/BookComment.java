@@ -4,32 +4,31 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-@Entity
-@Table(name = "BOOK_COMMENTS")
+@Document(collection = "book_comments")
 public class BookComment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String id;
 
-    @Column(name = "comment")
     private String comment;
 
-    @ManyToOne(targetEntity = Book.class, cascade = CascadeType.PERSIST,  fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
     private Book book;
 
     public BookComment(String feedback) {
         this.comment = feedback;
+    }
+
+    public BookComment(String comment, Book book) {
+        this.book = book;
+        this.comment = comment;
     }
 
     @Override
