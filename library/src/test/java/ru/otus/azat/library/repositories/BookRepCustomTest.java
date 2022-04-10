@@ -9,19 +9,15 @@ import org.springframework.context.annotation.Import;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataMongoTest
-@Import(BookRepCustomImpl.class)
 public class BookRepCustomTest {
     public final static String TEST_TITLE = "TestTitle";
 
     @Autowired
     private BookRepository bookRepository;
 
-    @Autowired
-    private BookRepCustomImpl bookRepCustom;
-
     @Test
     void successUpdateTitle(){
-        bookRepCustom.updateTitleById(bookRepository.findByTitle("3pigs").get().getId(), TEST_TITLE);
+        bookRepository.updateTitleById(bookRepository.findByTitle("3pigs").get().getId(), TEST_TITLE);
         assertEquals(TEST_TITLE, (bookRepository.findByTitle(TEST_TITLE).get().getTitle()));
     }
 }

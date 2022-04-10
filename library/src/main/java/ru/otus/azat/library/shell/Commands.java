@@ -35,9 +35,9 @@ public class Commands {
         return "Comment was deleted";
     }
     @ShellMethod(value = "Find all comments", key = {"comments"})
-    public String getCommentsByBook(){
+    public String getCommentsByBook(String bookTitle){
         return interpreter.showToUser(
-                bookCommentService.findComments()
+                bookCommentService.findCommentsByBookTitle(bookTitle)
         );
     }
     @ShellMethod(value = "Create new comment", key = {"cc"})

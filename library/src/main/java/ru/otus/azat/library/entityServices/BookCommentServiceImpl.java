@@ -3,20 +3,17 @@ package ru.otus.azat.library.entityServices;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.azat.library.entities.BookComment;
-import ru.otus.azat.library.repositories.BookCommentRepCustom;
 import ru.otus.azat.library.repositories.BookCommentRepository;
 
 import java.util.List;
 
 @Service
 public class BookCommentServiceImpl implements BookCommentService{
-    private final BookCommentRepCustom bookCommentRepCustom;
+
     private final BookCommentRepository bookCommentRepository;
     private final BookService bookService;
 
-    public BookCommentServiceImpl(BookCommentRepCustom bookCommentRepCustom,
-                                  BookCommentRepository bookCommentRepository, BookService bookService) {
-        this.bookCommentRepCustom = bookCommentRepCustom;
+    public BookCommentServiceImpl(BookCommentRepository bookCommentRepository, BookService bookService) {
         this.bookCommentRepository = bookCommentRepository;
         this.bookService = bookService;
     }
@@ -33,10 +30,15 @@ public class BookCommentServiceImpl implements BookCommentService{
     public List<BookComment> findComments(){
        return bookCommentRepository.findAll();
     }
+    @Transactional(readOnly = true)
+    @Override
+    public List<BookComment> findCommentsByBookTitle(String bookTitle){
+        return bookCommentRepository.findAllByBookTitle(bookTitle);
+    }
     @Transactional
     @Override
     public void updComment(String id, String comment){
-        bookCommentRepCustom.updateComment(id, comment);
+        bookCommentRepository.updateComment(id, comment);
     }
     @Transactional
     @Override

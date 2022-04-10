@@ -1,15 +1,11 @@
 package ru.otus.azat.library.repositories;
 
-
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import ru.otus.azat.library.entities.Book;
-import ru.otus.azat.library.entities.BookComment;
-
-import java.util.List;
 
 @Repository
 public class BookRepCustomImpl implements BookRepCustom {
@@ -29,8 +25,4 @@ public class BookRepCustomImpl implements BookRepCustom {
         mongoTemplate.updateFirst(query, upd, Book.class);
     }
 
-    @Override
-    public List<BookComment> findAllCommentsByBookTitle(String bookTitle) {
-        return null;
-    }
 }

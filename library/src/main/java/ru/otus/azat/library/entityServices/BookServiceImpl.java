@@ -2,12 +2,12 @@ package ru.otus.azat.library.entityServices;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.otus.azat.library.repositories.BookCommentRepository;
 import ru.otus.azat.library.repositories.BookRepository;
 import ru.otus.azat.library.entities.Book;
 import ru.otus.azat.library.exceptions.AuthorException;
 import ru.otus.azat.library.exceptions.BookException;
 import ru.otus.azat.library.exceptions.GenreException;
-import ru.otus.azat.library.repositories.BookRepCustom;
 
 import java.util.List;
 
@@ -16,14 +16,14 @@ public class BookServiceImpl implements BookService {
     private final GenreService genreService;
     private final AuthorService authorService;
     private final BookRepository bookRepository;
-    private final BookRepCustom bookRepCustom;
+    private final BookCommentRepository commentRepository;
 
     public BookServiceImpl(GenreService genreService, AuthorService authorService,
-                           BookRepository bookRepository, BookRepCustom bookRepCustom) {
+                           BookRepository bookRepository, BookCommentRepository commentRepository) {
         this.genreService = genreService;
         this.authorService = authorService;
         this.bookRepository = bookRepository;
-        this.bookRepCustom = bookRepCustom;
+        this.commentRepository = commentRepository;
     }
     @Transactional
     @Override
@@ -45,12 +45,17 @@ public class BookServiceImpl implements BookService {
     @Transactional
     @Override
     public void updateBook(String id, String newTitle){
-        bookRepCustom.updateTitleById(id, newTitle);
+        Book oldBook = bookRepository.findBookById(id).get();
+        bookRepository.updateTitleById(id, newTitle);
+        Book newBook = bookRepository.findBookById(id).get();
+        commentRepository.updateCommentsBook(oldBook, newBook);
     }
     @Transactional
     @Override
     public void deleteBook(String id){
+        Book book = bookRepository.findBookById(id).get();
         bookRepository.deleteById(id) ;
+        commentRepository.deleteBookCommentByBook(book);
     }
 
     @Transactional(readOnly = true)

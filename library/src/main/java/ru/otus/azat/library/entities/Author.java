@@ -14,7 +14,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Builder
 @Document(collection = "authors")
 public class Author {
     @Id

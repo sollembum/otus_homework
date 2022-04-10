@@ -9,6 +9,7 @@ public interface BookCommentService {
 
     List<BookComment> findComments();
 
+    List<BookComment> findCommentsByBookTitle(String bookTitle);
 
     void updComment(String id, String comment);
 
