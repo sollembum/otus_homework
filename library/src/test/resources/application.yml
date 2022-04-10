@@ -1,0 +1,15 @@
+spring:
+  main:
+    allow-circular-references: true
+  mongodb:
+    embedded:
+      version: 3.5.5
+  data:
+    mongodb:
+      authentication-database: LibraryDb
+      database: LibraryDb
+      host: localhost
+      port: 27017
+mongock:
+  change-logs-scan-package:
+    - ru.otus.azat.library.mongo
